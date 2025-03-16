@@ -10,7 +10,7 @@ RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | 
 # Update and install necessary packages
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin
-RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools
+RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools rsync
 
 # Install Firefox
 RUN apt-get update -y && apt-get install -y firefox
