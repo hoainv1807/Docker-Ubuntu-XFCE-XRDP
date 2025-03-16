@@ -1,3 +1,5 @@
+docker volume create ubuntu1_vol
+
 docker run -d --name debian-1 \
   --shm-size 2g \
   --cpus 2 \
