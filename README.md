@@ -12,7 +12,17 @@ This repository offers a pre-configured Docker container with a Debian XFCE desk
 
 ## Usage
 
-### 1. Build the Docker Image
-Clone the repository and build the Docker image:
-```bash
-docker build -t debian-xfce-xrdp .
+## Instructions
+Clone the repository:
+```
+git clone https://github.com/techroy23/Docker-Debian-XFCE-XRDP/
+cd Docker-Debian-XFCE-XRDP
+docker build -t debian-xfce-xrdp . --no-cache
+
+chmod +x run.sh
+nano run.sh
+## Change 50001 to any port you like
+## Change the USERNAME and PASSWORD
+
+./run.sh
+```
