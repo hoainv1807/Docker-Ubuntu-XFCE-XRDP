@@ -43,7 +43,15 @@ if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
     rm -f /var/run/xrdp/xrdp-sesman.pid
 fi
 
-# Start XRDP services with logs
+# Start XRDP services with logs routed to Docker logs
 echo "Starting XRDP services..."
-/usr/sbin/xrdp-sesman &
-exec /usr/sbin/xrdp -nodaemon
+/usr/sbin/xrdp-sesman > /proc/1/fd/1 2>/proc/1/fd/2 &
+exec /usr/sbin/xrdp -nodaemon > /proc/1/fd/1 2>/proc/1/fd/2 &
+
+# Auto-launch Wipter app after user login and route logs
+echo "Configuring Wipter app to auto-launch and route logs..."
+cat << EOF >> /home/"$USERNAME"/.bash_profile
+/bin/bash /opt/Wipter/wipter-app > /proc/1/fd/1 2>/proc/1/fd/2
+EOF
+
+echo "Entry point script configuration complete. Logs are routed to Docker logs."
