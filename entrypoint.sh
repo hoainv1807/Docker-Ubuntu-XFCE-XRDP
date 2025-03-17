@@ -49,8 +49,10 @@ fi
 # Kill any running XRDP services as a fail-safe
 # Stops any currently running XRDP services to prevent conflicts during restart
 echo "Forcefully killing any running XRDP services..."
-pkill -9 xrdp-sesman 2>/dev/null # Forcefully terminates xrdp-sesman if running
-pkill -9 xrdp 2>/dev/null       # Forcefully terminates xrdp if running
+# Forcefully terminates xrdp-sesman if running
+pkill -9 xrdp-sesman 2>/dev/null
+# Forcefully terminates xrdp if running
+pkill -9 xrdp 2>/dev/null
 echo "XRDP services terminated (if they were running)."
 
 # Removes stale XRDP session manager PID file if it exists
@@ -60,7 +62,7 @@ fi
 
 # Start XRDP services with logs
 # Begins XRDP services, ensuring they run in the foreground
-echo " IM NEW " # Placeholder message to confirm script edits or versioning
+echo "v3.17.25 " # Placeholder message to confirm script edits or versioning
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &         # Launches xrdp session manager in the background
 exec /usr/sbin/xrdp -nodaemon   # Starts XRDP in no-daemon mode for logging
