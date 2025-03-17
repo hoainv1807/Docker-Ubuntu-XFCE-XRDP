@@ -22,7 +22,7 @@ This project provides a Dockerized Ubuntu-based remote desktop environment lever
 ```
 git clone https://github.com/techroy23/Docker-Debian-XFCE-XRDP/
 cd Docker-Debian-XFCE-XRDP
-docker build -t debian-xfce-xrdp . --no-cache
+docker build -t ubuntu-xfce-xrdp . --no-cache
 
 chmod +x run.sh
 nano run.sh
