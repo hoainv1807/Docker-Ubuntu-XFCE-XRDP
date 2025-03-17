@@ -33,36 +33,6 @@ else
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
 
-# Ensure the autostart directory exists
-AUTOSTART_DIR="/home/$USERNAME/.config/autostart"
-DESKTOP_FILE="$AUTOSTART_DIR/wipter-app.desktop"
-
-# Check if the autostart file already exists
-if [ ! -f "$DESKTOP_FILE" ]; then
-  echo "Creating autostart entry for Wipter App..."
-
-  mkdir -p "$AUTOSTART_DIR"
-  chown -R "$USERNAME:$USERNAME" "$AUTOSTART_DIR"
-
-  # Create the .desktop file
-  cat <<EOF > "$DESKTOP_FILE"
-[Desktop Entry]
-Type=Application
-Name=Wipter App
-Exec=/opt/Wipter/wipter-app
-X-GNOME-Autostart-enabled=true
-EOF
-
-  # Set ownership and permissions
-  chown "$USERNAME:$USERNAME" "$DESKTOP_FILE"
-  chmod +x "$DESKTOP_FILE"
-
-  echo "Autostart entry created at $DESKTOP_FILE."
-else
-  echo "Autostart entry already exists. Skipping creation."
-fi
-
-
 # Kill any running XRDP services as a fail-safe
 echo "Forcefully killing any running XRDP services..."
 pkill -9 xrdp-sesman 2>/dev/null
@@ -74,6 +44,7 @@ if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
 fi
 
 # Start XRDP services with logs
+echo " IM NEW "
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
 exec /usr/sbin/xrdp -nodaemon
