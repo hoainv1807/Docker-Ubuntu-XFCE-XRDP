@@ -10,7 +10,7 @@ RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | 
 # Update and install necessary packages
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin
-RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools rsync
+RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools
 
 # Install Firefox
 RUN apt-get update -y && apt-get install -y firefox
@@ -18,7 +18,7 @@ RUN apt-get update -y && apt-get install -y firefox
 # Add Google's PPA and install Google Chrome
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get install -y google-chrome-stable
+    apt-get update -y && apt-get install -y google-chrome-stable && \
 
 # Clean Up
 RUN apt-get autoclean
