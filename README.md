@@ -1,12 +1,12 @@
-# Debian XFCE Desktop with XRDP (Dockerized)
+# Ubuntu XFCE Desktop with XRDP (Dockerized)
 
 ## Overview
-This project provides a Dockerized Debian-based remote desktop environment leveraging XFCE4 as the desktop environment and XRDP for remote access. It comes equipped with pre-installed utilities such as Google Chrome and features dynamic user creation at runtime. An additional run.sh script is included to simplify container execution.
+This project provides a Dockerized Ubuntu-based remote desktop environment leveraging XFCE4 as the desktop environment and XRDP for remote access. It comes equipped with pre-installed utilities and features dynamic user creation at runtime. An additional run.sh script is included to simplify container execution.
 
 ## Features
 - Lightweight Desktop Environment: Utilizes XFCE4 for a minimal yet user-friendly experience.
 - Remote Access: Configured XRDP on port 3389 (customizable).
-- Pre-installed Utilities: Includes essential tools such as Google Chrome, htop, curl, and more.
+- Pre-installed Utilities: Includes essential tools such as htop, curl, and more.
 - Dynamic User Management: Define the username and password dynamically via environment variables.
 - Quick Start: Includes a pre-defined run.sh script for effortless container deployment.
 - Streamlined Package Management: Reduces image size with cleanup commands.
