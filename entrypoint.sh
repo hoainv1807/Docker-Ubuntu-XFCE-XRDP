@@ -33,6 +33,12 @@ else
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
 
+# Kill any running XRDP services as a fail-safe
+echo "Forcefully killing any running XRDP services..."
+pkill -9 xrdp-sesman 2>/dev/null
+pkill -9 xrdp 2>/dev/null
+echo "XRDP services terminated (if they were running)."
+
 if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
     rm -f /var/run/xrdp/xrdp-sesman.pid
 fi
