@@ -1,5 +1,5 @@
 # Use the official Debian base image
-FROM debian:bullseye
+FROM ubuntu:24.04
 
 # Set environment variables to disable interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,15 +12,21 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin
 RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog
 
-# Add Google's PPA and install Google Chrome
-# RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg && \
-#    echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-#    apt-get update -y && apt-get install -y google-chrome-stable && \
+# Add additional dependencies required by the Wipter app
+RUN apt-get install -y libgtk-3-0t64 libgtk-3-bin libnotify4 libnotify-bin libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0t64 libuuid1 libsecret-1-0 libappindicator3-1
+
+# Download and install the Wipter app
+RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
+    gdebi --n /tmp/wipter-app-amd64.deb && \
+    rm /tmp/wipter-app-amd64.deb
+
+# Configure a default passwordless keyring
+RUN mkdir -p /root/.local/share/keyrings && \
+    touch /root/.local/share/keyrings/default.keyring && \
+    echo -n "" > /root/.local/share/keyrings/default.keyring
 
 # Clean Up
-RUN apt-get autoclean
-RUN apt-get autoremove
-RUN apt-get autopurge
+RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y
 
 # Configure XRDP
 RUN echo "startxfce4" > /etc/skel/.xsession
