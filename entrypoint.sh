@@ -33,6 +33,10 @@ else
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
 
+if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
+    rm -f /var/run/xrdp/xrdp-sesman.pid
+fi
+
 # Start XRDP services with logs
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
