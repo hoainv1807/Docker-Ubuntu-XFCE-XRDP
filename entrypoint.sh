@@ -32,18 +32,25 @@ fi
 if [ -z "$P2P_EMAIL" ]; then
   echo "P2P_EMAIL is not set or is blank. Skipping creation of the Peer2Profit configuration file."
 else
-  # Generate installid2 using uuidgen from util-linux
-  INSTALL_ID2=$(uuidgen)
+  # Path to the flag file that indicates the script has already run
+  FLAG_FILE="/home/$USERNAME/.config/org.peer2profit.setup_done"
 
-  # Define the configuration file path
-  CONFIG_FILE="/home/$USERNAME/.config/org.peer2profit.peer2profit.ini"
-  CONFIG_DIR=$(dirname "$CONFIG_FILE")
+  # Check if the flag file exists
+  if [ -f "$FLAG_FILE" ]; then
+    echo "Peer2Profit configuration file has already been created. Skipping."
+  else
+    # Generate installid2 using uuidgen from util-linux
+    INSTALL_ID2=$(uuidgen)
 
-  # Create the configuration directory if it doesn't exist
-  mkdir -p "$CONFIG_DIR"
+    # Define the configuration file path
+    CONFIG_FILE="/home/$USERNAME/.config/org.peer2profit.peer2profit.ini"
+    CONFIG_DIR=$(dirname "$CONFIG_FILE")
 
-  # Write the content to the configuration file
-  cat <<EOF > "$CONFIG_FILE"
+    # Create the configuration directory if it doesn't exist
+    mkdir -p "$CONFIG_DIR"
+
+    # Write the content to the configuration file
+    cat <<EOF > "$CONFIG_FILE"
 [General]
 Username=$P2P_EMAIL
 hideToTrayMsg=true
@@ -51,9 +58,14 @@ installid2=$INSTALL_ID2
 locale=en_US
 EOF
 
-  chown -R "$USERNAME:$USERNAME" "$CONFIG_DIR"
-  echo "Peer2Profit configuration file created successfully at $CONFIG_FILE."
+    chown -R "$USERNAME:$USERNAME" "$CONFIG_DIR"
+
+    # Create the flag file to mark the script as completed
+    touch "$FLAG_FILE"
+    echo "Peer2Profit configuration file created successfully at $CONFIG_FILE."
+  fi
 fi
+
 
 # Kill any running XRDP services as a fail-safe
 echo "Forcefully killing any running XRDP services..."
