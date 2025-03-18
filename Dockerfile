@@ -32,10 +32,8 @@ RUN wget -O /tmp/peer2profit_0.48_amd64.deb https://updates.peer2profit.app/peer
     gdebi --n /tmp/peer2profit_0.48_amd64.deb && \
     rm /tmp/peer2profit_0.48_amd64.deb
 
-# Download and install the Nomachine application from the official source
-RUN wget -O /tmp/nomachine_8.16.1_1_amd64.deb https://download.nomachine.com/download/8.16/Linux/nomachine_8.16.1_1_amd64.deb && \
-    gdebi --n /tmp/nomachine_8.16.1_1_amd64.deb && \
-    rm /tmp/nomachine_8.16.1_1_amd64.deb
+# Install Brave browser using the installation script
+RUN curl -fsS https://dl.brave.com/install.sh | sh
 
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
