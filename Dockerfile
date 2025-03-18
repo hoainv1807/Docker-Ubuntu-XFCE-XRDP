@@ -14,7 +14,7 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin 
 
 # Install X11 server, XRDP, and additional utilities
-RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime
+RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime ca-certificates apt-transport-https
 
 # Install dependencies required by the Wipter application
 RUN apt-get install -y libgtk-3-0t64 libgtk-3-bin libnotify4 libnotify-bin libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0t64 libuuid1 libsecret-1-0 libappindicator3-1
@@ -47,6 +47,19 @@ RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
     echo "ListenAddress 0.0.0.0" >> /etc/ssh/sshd_config && \
     echo "ListenAddress ::" >> /etc/ssh/sshd_config && \
     mkdir -p /var/run/sshd
+
+# Install Anydesk using the installation script
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    curl \
+    apt-transport-https && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY -o /etc/apt/keyrings/keys.anydesk.com.asc && \
+    chmod a+r /etc/apt/keyrings/keys.anydesk.com.asc && \
+    echo "deb [signed-by=/etc/apt/keyrings/keys.anydesk.com.asc] https://deb.anydesk.com all main" > /etc/apt/sources.list.d/anydesk-stable.list && \
+    apt-get update && \
+    apt-get install -y anydesk && \
+    rm -rf /var/lib/apt/lists/*
 
 # Clean up unnecessary packages and cache to reduce image size
 RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y
