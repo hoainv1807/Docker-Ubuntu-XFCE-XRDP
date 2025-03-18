@@ -65,7 +65,7 @@ if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
   rm -f /var/run/xrdp/xrdp-sesman.pid
 fi
 
-echo "v3.17.25 " # Placeholder message to confirm script edits or versioning
+echo "v3.18.25"
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
 exec /usr/sbin/xrdp -nodaemon
