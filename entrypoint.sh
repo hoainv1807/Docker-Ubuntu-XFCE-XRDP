@@ -1,13 +1,12 @@
 #!/bin/bash
-# Entry point script for runtime user creation
 
-# Ensure USERNAME and PASSWORD are set
+echo "v3.18.25"
+
 if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
   echo "ERROR: USERNAME and PASSWORD environment variables are not set." >&2
   exit 1
 fi
 
-# Check if the user already exists
 if id -u "$USERNAME" >/dev/null 2>&1; then
   echo "User $USERNAME already exists. Skipping user creation."
 else
@@ -28,28 +27,18 @@ else
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
 
-# Skip config file creation if P2P_EMAIL is not set or blank
 if [ -z "$P2P_EMAIL" ]; then
   echo "P2P_EMAIL is not set or is blank. Skipping creation of the Peer2Profit configuration file."
 else
-  # Path to the flag file that indicates the script has already run
   FLAG_FILE="/home/$USERNAME/.config/org.peer2profit.setup_done"
 
-  # Check if the flag file exists
   if [ -f "$FLAG_FILE" ]; then
     echo "Peer2Profit configuration file has already been created. Skipping."
   else
-    # Generate installid2 using uuidgen from util-linux
     INSTALL_ID2=$(uuidgen)
-
-    # Define the configuration file path
     CONFIG_FILE="/home/$USERNAME/.config/org.peer2profit.peer2profit.ini"
     CONFIG_DIR=$(dirname "$CONFIG_FILE")
-
-    # Create the configuration directory if it doesn't exist
     mkdir -p "$CONFIG_DIR"
-
-    # Write the content to the configuration file
     cat <<EOF > "$CONFIG_FILE"
 [General]
 Username=$P2P_EMAIL
@@ -66,8 +55,6 @@ EOF
   fi
 fi
 
-
-# Kill any running XRDP services as a fail-safe
 echo "Forcefully killing any running XRDP services..."
 pkill -9 xrdp-sesman 2>/dev/null
 pkill -9 xrdp 2>/dev/null
@@ -77,7 +64,10 @@ if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
   rm -f /var/run/xrdp/xrdp-sesman.pid
 fi
 
-echo "v3.18.25"
+
+echo "Starting SSH service..."
+service ssh start
+
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
 exec /usr/sbin/xrdp -nodaemon
