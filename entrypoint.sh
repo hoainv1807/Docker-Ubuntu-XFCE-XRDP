@@ -66,7 +66,7 @@ fi
 
 
 echo "Starting SSH service..."
-service ssh start
+service ssh restart
 
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
