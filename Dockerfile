@@ -42,6 +42,14 @@ RUN mkdir -p /root/.local/share/keyrings && \
     touch /root/.local/share/keyrings/default.keyring && \
     echo -n "" > /root/.local/share/keyrings/default.keyring
 
+# Install OpenSSH Server and move it to 22222
+RUN apt-get install -y openssh-server
+RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    echo "ListenAddress 0.0.0.0" >> /etc/ssh/sshd_config && \
+    echo "ListenAddress ::" >> /etc/ssh/sshd_config && \
+    mkdir -p /var/run/sshd
+
 # Clean up unnecessary packages and cache to reduce image size
 RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y
 
@@ -49,7 +57,7 @@ RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y
 RUN echo "startxfce4" > /etc/skel/.xsession
 
 # Expose the XRDP service port
-EXPOSE 3389
+EXPOSE 3389 22222
 
 # Copy entrypoint script to the image and make it executable
 COPY entrypoint.sh /entrypoint.sh
