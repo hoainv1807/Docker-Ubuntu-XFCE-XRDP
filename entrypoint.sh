@@ -27,6 +27,18 @@ else
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
 
+FLAG_FILE="/home/$USERNAME/.config/org.mysteriumnetwork.setup_done"
+
+if [ -f "$FLAG_FILE" ]; then
+  echo "Mystery Network setup has already been completed. Skipping installation."
+else
+  echo "Running Mystery Network installation script..."
+  sudo -E bash -c "$(curl -s https://raw.githubusercontent.com/mysteriumnetwork/node/master/install.sh)"
+  mkdir -p "$(dirname "$FLAG_FILE")"
+  touch "$FLAG_FILE"
+  echo "Mystery Network installation completed successfully."
+fi
+
 if [ -z "$P2P_EMAIL" ]; then
   echo "P2P_EMAIL is not set or is blank. Skipping creation of the Peer2Profit configuration file."
 else
