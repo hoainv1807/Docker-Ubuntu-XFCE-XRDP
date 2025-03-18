@@ -10,11 +10,11 @@ RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | 
 # Update system packages and upgrade installed software
 RUN apt-get update -y && apt-get upgrade -y
 
-# Install XFCE desktop environment and related tools
-RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin 
+# Install XFCE, XRDP, X11 and related tools
+RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin xrdp xorg dbus dbus-x11 x11-xserver-utils
 
-# Install X11 server, XRDP, and additional utilities
-RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime ca-certificates apt-transport-https
+# Install additional utilities
+RUN apt-get install -y sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime ca-certificates apt-transport-https
 
 # Install dependencies required by the Wipter application
 RUN apt-get install -y libgtk-3-0t64 libgtk-3-bin libnotify4 libnotify-bin libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0t64 libuuid1 libsecret-1-0 libappindicator3-1
