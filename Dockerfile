@@ -43,9 +43,6 @@ RUN wget -O /tmp/anydesk_6.4.0-1_amd64.deb https://download.anydesk.com/linux/an
 # Install Brave browser using the installation script
 RUN curl -fsS https://dl.brave.com/install.sh | sh
 
-# Install Mysterium Network Node the installation script
-RUN sudo -E bash -c "$(curl -s https://raw.githubusercontent.com/mysteriumnetwork/node/master/install.sh)"
-
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
     touch /root/.local/share/keyrings/default.keyring && \
