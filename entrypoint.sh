@@ -20,7 +20,7 @@ else
   echo "xfce4-session" > /home/"$USERNAME"/.xsession
   chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"
   echo "Configured permissions for user: $USERNAME"
-
+  echo "Configuring passwordless keyring for user: $USERNAME"
   mkdir -p /home/"$USERNAME"/.local/share/keyrings
   touch /home/"$USERNAME"/.local/share/keyrings/default.keyring
   echo -n "" > /home/"$USERNAME"/.local/share/keyrings/default.keyring
