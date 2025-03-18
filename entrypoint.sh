@@ -71,3 +71,6 @@ service ssh restart
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
 exec /usr/sbin/xrdp -nodaemon
+
+# Keep the container running (optional, if needed)
+tail -f /dev/null
