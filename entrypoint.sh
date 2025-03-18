@@ -52,7 +52,7 @@ locale=en_US
 EOF
 
   chown -R "$USERNAME:$USERNAME" "$CONFIG_DIR"
-  echo "Peer2Profit configuration file created successfully at $CONFIG_FILE with installid2=$INSTALL_ID2."
+  echo "Peer2Profit configuration file created successfully at $CONFIG_FILE."
 fi
 
 # Kill any running XRDP services as a fail-safe
