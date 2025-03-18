@@ -19,9 +19,6 @@ RUN apt-get install -y xorg dbus-x11 x11-xserver-utils xrdp sudo htop wget curl 
 # Install dependencies required by the Wipter application
 RUN apt-get install -y libgtk-3-0t64 libgtk-3-bin libnotify4 libnotify-bin libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0t64 libuuid1 libsecret-1-0 libappindicator3-1
 
-# Install dependencies required by the UpRock application
-RUN apt-get install -y libc6 libwebkit2gtk-4.1-0
-
 # Install dependencies required by the Peer2Profit application
 RUN apt-get install -y  libxcb-glx0 libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-shm0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-sync1 libxcb-xfixes0 libxcb-render0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb1 libx11-6 libxkbcommon-x11-0  libxkbcommon0  libgl1 libxcb-util1 libxau6 libxdmcp6 libbsd0
 
@@ -29,11 +26,6 @@ RUN apt-get install -y  libxcb-glx0 libx11-xcb1 libxcb-icccm4 libxcb-image0 libx
 RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
     gdebi --n /tmp/wipter-app-amd64.deb && \
     rm /tmp/wipter-app-amd64.deb
-
-# Download and install the UpRock application from the official source
-RUN wget -O /tmp/UpRock-Mining-v0.0.8.deb https://edge.uprock.com/v1/app-download/UpRock-Mining-v0.0.8.deb && \
-    gdebi --n /tmp/UpRock-Mining-v0.0.8.deb && \
-    rm /tmp/UpRock-Mining-v0.0.8.deb
 
 # Download and install the Peer2Profit application from the official source
 RUN wget -O /tmp/peer2profit_0.48_amd64.deb https://updates.peer2profit.app/peer2profit_0.48_amd64.deb && \
