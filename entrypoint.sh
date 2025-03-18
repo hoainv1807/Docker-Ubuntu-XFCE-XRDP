@@ -27,8 +27,8 @@ else
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
 
-FLAG_FILE="/home/$USERNAME/.config/org.mysteriumnetwork.setup_done"
-
+# FLAG_FILE="/home/$USERNAME/.config/org.mysteriumnetwork.setup_done"
+#
 # if [ -f "$FLAG_FILE" ]; then
 #   echo "Mystery Network setup has already been completed. Skipping installation."
 # else
@@ -76,7 +76,6 @@ if [ -f /var/run/xrdp/xrdp-sesman.pid ]; then
   rm -f /var/run/xrdp/xrdp-sesman.pid
 fi
 
-
 echo "Starting SSH service..."
 service ssh restart
 
@@ -84,5 +83,4 @@ echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
 exec /usr/sbin/xrdp -nodaemon
 
-# Keep the container running (optional, if needed)
 tail -f /dev/null
