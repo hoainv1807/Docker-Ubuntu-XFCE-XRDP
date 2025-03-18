@@ -25,13 +25,13 @@ else
   # Configure user permissions
   # Adds the user to the 'sudo' group for administrative privileges
   usermod -aG sudo "$USERNAME"
-  
+
   # Grants the user passwordless sudo access by appending to the sudoers file
   echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
   # Sets up XFCE as the default desktop session
   echo "xfce4-session" > /home/"$USERNAME"/.xsession
-  
+
   # Ensures correct ownership of the home directory and its contents
   chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"
   echo "Configured permissions for user: $USERNAME"
@@ -45,29 +45,6 @@ else
   chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"/.local/share/keyrings
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
-
-# Ensure P2P_EMAIL is set
-if [ -z "$P2P_EMAIL" ]; then
-  echo "ERROR: P2P_EMAIL environment variable is not set." >&2
-  exit 1
-fi
-
-  # Write the content to the configuration file
-  cat <<EOF > "$CONFIG_FILE"
-[General]
-Username=$P2P_EMAIL
-hideToTrayMsg=true
-installid2=$INSTALL_ID2
-locale=en_US
-EOF
-
-  # Set the correct ownership
-  chown -R "$USERNAME:$USERNAME" "$CONFIG_DIR"
-  echo "Peer2Profit configuration file created successfully."
-else
-  echo "Peer2Profit configuration file already exists. Skipping creation."
-fi
-
 
 # Kill any running XRDP services as a fail-safe
 # Stops any currently running XRDP services to prevent conflicts during restart
