@@ -49,7 +49,7 @@ RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
     mkdir -p /var/run/sshd
 
 # Clean up unnecessary packages and cache to reduce image size
-RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y
+RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y && rm -rf /var/lib/apt/lists/*
 
 # Configure XRDP to launch the XFCE desktop environment by default
 RUN echo "startxfce4" > /etc/skel/.xsession
