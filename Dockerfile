@@ -22,9 +22,6 @@ RUN apt-get install -y libgtk-3-0t64 libgtk-3-bin libnotify4 libnotify-bin libns
 # Install dependencies required by the Peer2Profit application
 RUN apt-get install -y  libxcb-glx0 libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-shm0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-sync1 libxcb-xfixes0 libxcb-render0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb1 libx11-6 libxkbcommon-x11-0  libxkbcommon0  libgl1 libxcb-util1 libxau6 libxdmcp6 libbsd0
 
-# Install dependencies required by the anydesk application
-RUN apt-get install -y libglx-mesa0 xdg-utils
-
 # Download and install the Wipter application from the official source
 RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
     gdebi --n /tmp/wipter-app-amd64.deb && \
@@ -34,11 +31,6 @@ RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/
 RUN wget -O /tmp/peer2profit_0.48_amd64.deb https://updates.peer2profit.app/peer2profit_0.48_amd64.deb && \
     gdebi --n /tmp/peer2profit_0.48_amd64.deb && \
     rm /tmp/peer2profit_0.48_amd64.deb
-
-# Download and install the Anydesk application from the official source
-RUN wget -O /tmp/anydesk_6.4.0-1_amd64.deb https://download.anydesk.com/linux/anydesk_6.4.0-1_amd64.deb && \
-    gdebi --n /tmp/anydesk_6.4.0-1_amd64.deb && \
-    rm /tmp/anydesk_6.4.0-1_amd64.deb
 
 # Install Brave browser using the installation script
 RUN curl -fsS https://dl.brave.com/install.sh | sh
@@ -63,7 +55,7 @@ RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y
 RUN echo "startxfce4" > /etc/skel/.xsession
 
 # Expose the XRDP service port
-EXPOSE 3389 4449 22222
+EXPOSE 3389 22222
 
 # Copy entrypoint script to the image and make it executable
 COPY entrypoint.sh /entrypoint.sh
