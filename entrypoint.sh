@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "v3.20.25-novnc"
+echo "v3.18.25"
 
 if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
   echo "ERROR: USERNAME and PASSWORD environment variables are not set." >&2
@@ -26,37 +26,6 @@ else
   chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"/.local/share/keyrings
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
-
-
-echo "Configuring VNC server for user: $USERNAME"
-
-# Create VNC password file
-mkdir -p /home/"$USERNAME"/.vnc
-echo "$PASSWORD" | x11vnc -storepasswd -rfbauth /home/"$USERNAME"/.vnc/passwd
-chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"/.vnc
-chmod 600 /home/"$USERNAME"/.vnc/passwd
-
-# Start x11vnc with the specified password and display :0
-echo "Starting x11vnc..."
-x11vnc -forever -usepw -shared -rfbauth /home/"$USERNAME"/.vnc/passwd -display :0 &
-
-# Start noVNC
-echo "Starting noVNC..."
-/opt/novnc/utils/novnc_proxy --vnc localhost:5900 --listen 6080 &
-echo "Starting VNC server..."
-sudo -u "$USERNAME" vncserver :1 -geometry 1280x800 -depth 24
-
-# FLAG_FILE="/home/$USERNAME/.config/org.mysteriumnetwork.setup_done"
-#
-# if [ -f "$FLAG_FILE" ]; then
-#   echo "Mystery Network setup has already been completed. Skipping installation."
-# else
-#   echo "Running Mystery Network installation script..."
-#   sudo -E bash -c "$(curl -s https://raw.githubusercontent.com/mysteriumnetwork/node/master/install.sh)"
-#   mkdir -p "$(dirname "$FLAG_FILE")"
-#   touch "$FLAG_FILE"
-#   echo "Mystery Network installation completed successfully."
-# fi
 
 if [ -z "$P2P_EMAIL" ]; then
   echo "P2P_EMAIL is not set or is blank. Skipping creation of the Peer2Profit configuration file."
