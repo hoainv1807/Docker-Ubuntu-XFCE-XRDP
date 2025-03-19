@@ -49,8 +49,7 @@ RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
     mkdir -p /var/run/sshd
 
 # Install x11vnc and noVNC
-RUN apt-get update -y && apt-get install -y \
-    x11vnc websockify && \
+RUN apt-get install -y x11vnc websockify && \
     mkdir -p /opt/novnc && \
     wget -qO- https://github.com/novnc/noVNC/archive/refs/tags/v1.6.0.tar.gz | tar xz -C /opt/novnc --strip-components=1 && \
     ln -s /opt/novnc/utils/websockify /usr/local/bin/websockify && \
