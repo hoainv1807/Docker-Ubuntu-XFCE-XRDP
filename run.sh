@@ -4,4 +4,5 @@ docker run -d --name Ubuntu-1 \
   --restart always \
   --cap-add=SYS_ADMIN \
   -e USERNAME=TEST -e PASSWORD=TEST \
+  -p 50001:3389 \
   ubuntu-xfce-xrdp
