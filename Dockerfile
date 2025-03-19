@@ -48,6 +48,13 @@ RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
     echo "ListenAddress ::" >> /etc/ssh/sshd_config && \
     mkdir -p /var/run/sshd
 
+# Install x11vnc and noVNC
+RUN apt-get update -y && apt-get install -y \
+    x11vnc websockify && \
+    mkdir -p /opt/novnc && \
+    wget -qO- https://github.com/novnc/noVNC/archive/refs/tags/v1.6.0.tar.gz | tar xz -C /opt/novnc --strip-components=1 && \
+    ln -s /opt/novnc/utils/websockify /usr/local/bin/websockify && \
+
 # Clean up unnecessary packages and cache to reduce image size
 RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -55,7 +62,7 @@ RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y && rm -rf
 RUN echo "startxfce4" > /etc/skel/.xsession
 
 # Expose the XRDP service port
-EXPOSE 3389 22222
+EXPOSE 3389 6080 22222
 
 # Copy entrypoint script to the image and make it executable
 COPY entrypoint.sh /entrypoint.sh
