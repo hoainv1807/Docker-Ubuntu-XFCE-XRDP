@@ -3,6 +3,7 @@ docker run -d --name Ubuntu-1 \
   --cpus 2 \
   --restart always \
   --cap-add=SYS_ADMIN \
-  -e USERNAME=TEST -e PASSWORD=TEST \
   -p 50001:3389 \
+  -e USERNAME=TEST -e PASSWORD=TEST \
+  -p P2P_EMAIL="noemail@example.com" \
   ubuntu-xfce-xrdp
