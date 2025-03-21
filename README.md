@@ -10,6 +10,7 @@ This project provides a Dockerized Ubuntu-based remote desktop environment lever
 - Dynamic User Management: Define the username and password dynamically via environment variables.
 - Quick Start: Includes a pre-defined run.sh script for effortless container deployment.
 - Streamlined Package Management: Reduces image size with cleanup commands.
+- Preloaded with Google Chrome, Wipter, Peer2Profit
 
 ## Usage
 - Environment Variables
