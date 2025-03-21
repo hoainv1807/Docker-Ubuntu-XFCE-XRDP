@@ -18,7 +18,7 @@ RUN apt-get install -y \
 
 RUN apt-get install -y \
     ca-certificates fonts-liberation xdg-utils \
-    libasound2 libatk-bridge2.0-0 libatk1.0-0 \
+    libasound2t64 libatk-bridge2.0-0 libatk1.0-0 \
     libatspi2.0-0 libc6 libcairo2 libcups2 \
     libcurl4 libdbus-1-3 libexpat1 libgbm1 \
     libglib2.0-0 libgtk-3-0 libgtk-3-bin libgtk-4-1 \
