@@ -32,6 +32,8 @@ RUN apt-get install -y \
     libxcomposite1 libxdamage1 libxext6 libxfixes3 libxrandr2 \
     libxcb-util1 libxdmcp6 libbsd0
 
+RUN apt update -y && apt install proxychains -y
+
 # Download and install the Google Chrome from the official source
 RUN wget -O /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     gdebi --n /tmp/google-chrome-stable_current_amd64.deb && \
@@ -42,10 +44,10 @@ RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/
     gdebi --n /tmp/wipter-app-amd64.deb && \
     rm /tmp/wipter-app-amd64.deb
 
-# Download and install the Peer2Profit application from the official source
-RUN wget -O /tmp/peer2profit_0.48_amd64.deb https://updates.peer2profit.app/peer2profit_0.48_amd64.deb && \
-    gdebi --n /tmp/peer2profit_0.48_amd64.deb && \
-    rm /tmp/peer2profit_0.48_amd64.deb
+# Download Uprock and install
+RUN wget -0 /tmp/uprock.deb https://edge.uprock.com/v1/app-download/UpRock-Mining-v0.0.8.deb && \
+    gdebi --n /tmp/uprock.deb && \
+    rm /tmp/uprock.deb
 
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
