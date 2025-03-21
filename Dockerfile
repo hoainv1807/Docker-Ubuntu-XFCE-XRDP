@@ -7,20 +7,35 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Preconfigure keyboard layout to English (US)
 RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | debconf-set-selections
 
-# Update system packages and upgrade installed software
+# Update, Upgrade and Install packages
 RUN apt-get update -y && apt-get upgrade -y
 
-# Install XFCE, XRDP, X11 and related tools
-RUN apt-get install -y xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin xrdp xorg dbus dbus-x11 x11-xserver-utils
+RUN apt-get install -y \
+    xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin \
+    xrdp xorg dbus dbus-x11 x11-xserver-utils \
+    sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime \
+    apt-transport-https openssh-server
 
-# Install additional utilities
-RUN apt-get install -y sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime ca-certificates apt-transport-https
+RUN apt-get install -y \
+    ca-certificates fonts-liberation xdg-utils \
+    libasound2 libatk-bridge2.0-0 libatk1.0-0 \
+    libatspi2.0-0 libc6 libcairo2 libcups2 \
+    libcurl4 libdbus-1-3 libexpat1 libgbm1 \
+    libglib2.0-0 libgtk-3-0 libgtk-3-bin libgtk-4-1 \
+    libnspr4 libnss3 libpango-1.0-0 libudev1 libuuid1 \
+    libvulkan1 libx11-6 libxau6 libxcb-glx0 libxcb1 \
+    libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-shm0 \
+    libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 \
+    libxcb-sync1 libxcb-xfixes0 libxcb-render0 libxcb-shape0 \
+    libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0 libxkbcommon0 \
+    libgl1 libappindicator3-1 libnotify4 libnotify-bin \
+    libxcomposite1 libxdamage1 libxext6 libxfixes3 libxrandr2 \
+    libxcb-util1 libxdmcp6 libbsd0
 
-# Install dependencies required by the Wipter application
-RUN apt-get install -y libgtk-3-0t64 libgtk-3-bin libnotify4 libnotify-bin libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0t64 libuuid1 libsecret-1-0 libappindicator3-1
-
-# Install dependencies required by the Peer2Profit application
-RUN apt-get install -y  libxcb-glx0 libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-shm0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-sync1 libxcb-xfixes0 libxcb-render0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb1 libx11-6 libxkbcommon-x11-0  libxkbcommon0  libgl1 libxcb-util1 libxau6 libxdmcp6 libbsd0
+# Download and install the Google Chrome from the official source
+RUN wget -O /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    gdebi --n /tmp/google-chrome-stable_current_amd64.deb && \
+    rm /tmp/google-chrome-stable_current_amd64.deb
 
 # Download and install the Wipter application from the official source
 RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
@@ -32,16 +47,12 @@ RUN wget -O /tmp/peer2profit_0.48_amd64.deb https://updates.peer2profit.app/peer
     gdebi --n /tmp/peer2profit_0.48_amd64.deb && \
     rm /tmp/peer2profit_0.48_amd64.deb
 
-# Install Brave browser using the installation script
-RUN curl -fsS https://dl.brave.com/install.sh | sh
-
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
     touch /root/.local/share/keyrings/default.keyring && \
     echo -n "" > /root/.local/share/keyrings/default.keyring
 
-# Install OpenSSH Server and move it to 22222
-RUN apt-get install -y openssh-server
+# Move OpenSSH Server to 22222
 RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     echo "ListenAddress 0.0.0.0" >> /etc/ssh/sshd_config && \
@@ -55,7 +66,7 @@ RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y && rm -rf
 RUN echo "startxfce4" > /etc/skel/.xsession
 
 # Expose the XRDP service port
-EXPOSE 3389 6080 22222
+EXPOSE 3389 22222
 
 # Copy entrypoint script to the image and make it executable
 COPY entrypoint.sh /entrypoint.sh
