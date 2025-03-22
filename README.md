@@ -10,7 +10,7 @@ This project provides a Dockerized Ubuntu-based remote desktop environment lever
 - Dynamic User Management: Define the username and password dynamically via environment variables.
 - Quick Start: Includes a pre-defined run.sh script for effortless container deployment.
 - Streamlined Package Management: Reduces image size with cleanup commands.
-- Preloaded with Google Chrome, Wipter, Peer2Profit
+- Preloaded with Wipter, Uprock, Grass
 
 ## Usage
 - Environment Variables
@@ -21,16 +21,21 @@ This project provides a Dockerized Ubuntu-based remote desktop environment lever
 
 ## Instructions
 ```
-git clone https://github.com/techroy23/Docker-Debian-XFCE-XRDP/
-cd Docker-Debian-XFCE-XRDP
+git clone https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRDP.git
+cd Docker-Ubuntu-XFCE-XRDP
 docker build -t ubuntu-xfce-xrdp . --no-cache
 
-chmod +x run.sh
+#### Run by bash file
+chmod +x *.sh
 nano run.sh
-## Change 50001 to any port you like
-## Change the USERNAME and PASSWORD
+## Change 5001 to any port you like (xrdp)
+## Change 4001 to anh port you like (ssh)
+## Change the USERNAME and PASSWORD (xrdp login)
 
 ./run.sh
+
+### Run by terminal
+docker run -d --name Ubuntu-1 --shm-size 1g  --cpus 1   --restart always   --cap-add=SYS_ADMIN  -p 5001:3389  -p 4001:22222  -e USERNAME=TEST -e PASSWORD=TEST  ubuntu-xfce-xrdp
 ```
 
 ## File Structure
