@@ -34,11 +34,6 @@ RUN apt-get install -y \
 
 RUN apt update -y && apt install proxychains -y
 
-# Download and install the Google Chrome from the official source
-RUN wget -O /tmp/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    gdebi --n /tmp/google-chrome-stable_current_amd64.deb && \
-    rm /tmp/google-chrome-stable_current_amd64.deb
-
 # Download and install the Wipter application from the official source
 RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
     gdebi --n /tmp/wipter-app-amd64.deb && \
@@ -49,6 +44,9 @@ RUN wget -O /tmp/uprock.deb https://edge.uprock.com/v1/app-download/UpRock-Minin
     gdebi --n /tmp/uprock.deb && \
     rm /tmp/uprock.deb
 
+# Grass
+COPY Grass.deb /tmp/
+RUN apt install /tmp/Grass.deb -y && apt update && apt install -f -y && rm /tmp/Grass.deb
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
     touch /root/.local/share/keyrings/default.keyring && \
