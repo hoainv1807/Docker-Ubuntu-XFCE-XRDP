@@ -49,6 +49,9 @@ RUN wget -O /tmp/uprock.deb https://edge.uprock.com/v1/app-download/UpRock-Minin
     gdebi --n /tmp/uprock.deb && \
     rm /tmp/uprock.deb
 
+# Grass
+COPY Grass.deb
+RUN apt install Grass.deb && apt update && apt install -f && xhost +
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
     touch /root/.local/share/keyrings/default.keyring && \
