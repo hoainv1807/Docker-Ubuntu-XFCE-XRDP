@@ -40,7 +40,7 @@ RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/
     rm /tmp/wipter-app-amd64.deb
 
 # Download Uprock and install
-RUN wget -O /tmp/uprock.deb https://edge.uprock.com/v1/app-download/UpRock-Mining-v0.0.8.deb && \
+RUN COPY uprock.deb /tmp/ && \
     gdebi --n /tmp/uprock.deb && \
     rm /tmp/uprock.deb
 
