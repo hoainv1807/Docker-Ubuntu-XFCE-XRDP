@@ -40,8 +40,8 @@ RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/
     rm /tmp/wipter-app-amd64.deb
 
 # Download Uprock and install
-RUN COPY uprock.deb /tmp/ && \
-    gdebi --n /tmp/uprock.deb && \
+COPY uprock.deb /tmp/
+RUN gdebi --n /tmp/uprock.deb && \
     rm /tmp/uprock.deb
 
 # Grass
