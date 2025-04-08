@@ -14,7 +14,7 @@ RUN apt-get install -y \
     xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
     sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime \
-    apt-transport-https openssh-server
+    apt-transport-https openssh-server xdotool
 
 RUN apt-get install -y \
     ca-certificates fonts-liberation xdg-utils \
