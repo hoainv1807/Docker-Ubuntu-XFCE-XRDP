@@ -14,7 +14,7 @@ RUN apt-get install -y \
     xfce4 xfce4-goodies xfce4-notifyd xfce4-whiskermenu-plugin xfce4-netload-plugin xfce4-cpufreq-plugin \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
     sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime \
-    apt-transport-https openssh-server xdotool
+    apt-transport-https openssh-server xdotoolproxychains4
 
 RUN apt-get install -y \
     ca-certificates fonts-liberation xdg-utils \
@@ -32,17 +32,15 @@ RUN apt-get install -y \
     libxcomposite1 libxdamage1 libxext6 libxfixes3 libxrandr2 \
     libxcb-util1 libxdmcp6 libbsd0
 
-RUN apt update -y && apt install proxychains -y
-
 # Download and install the Wipter application from the official source
 RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
     gdebi --n /tmp/wipter-app-amd64.deb && \
     rm /tmp/wipter-app-amd64.deb
 
 # Download Uprock and install
-COPY uprock.deb /tmp/
-RUN gdebi --n /tmp/uprock.deb && \
-    rm /tmp/uprock.deb
+COPY uprock_v0.0.8.deb /tmp/
+RUN gdebi --n /tmp/uprock_v0.0.8.deb && \
+    rm /tmp/uprock_v0.0.8.deb
 
 # Grass
 COPY Grass.deb /tmp/
