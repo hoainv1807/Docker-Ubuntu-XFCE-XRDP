@@ -12,7 +12,7 @@ RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install --no-install-recommends xfce4-session \
     xfwm4 xfce4-panel thunar zutty \
-    xinit xserver-xorg xserver-xorg-core -y
+    xinit xserver-xorg xserver-xorg-core gnome-keyring -y
 
 RUN apt-get install -y \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
