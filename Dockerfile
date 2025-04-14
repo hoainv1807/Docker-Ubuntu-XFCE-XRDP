@@ -36,9 +36,9 @@ RUN apt-get install -y \
     libxcb-util1 libxdmcp6 libbsd0
 
 # Download and install the Wipter application from the official source
-RUN wget -O /tmp/wipter-app-amd64.deb https://provider-assets.wipter.com/latest/linux/x64/wipter-app-amd64.deb && \
-    gdebi --n /tmp/wipter-app-amd64.deb && \
-    rm /tmp/wipter-app-amd64.deb
+COPY wipter.deb /tmp/
+RUN gdebi --n /tmp/wipter.deb && \
+    rm /tmp/wipter.deb
 
 # Download Uprock and install
 COPY uprock_v0.0.8.deb /tmp/
