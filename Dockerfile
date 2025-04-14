@@ -37,8 +37,8 @@ RUN apt-get install -y \
 
 # Download and install the Wipter application
 RUN wget -O /tmp/wipter.deb https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRDP/releases/download/wipter/wipter.deb && \
-     gdebi --n /tmp/wipter-app-amd64.deb && \
-     rm /tmp/wipter-app-amd64.deb
+     gdebi --n /tmp/wipter.deb && \
+     rm /tmp/wipter.deb
 
 # Download Uprock and install
 COPY uprock_v0.0.8.deb /tmp/
