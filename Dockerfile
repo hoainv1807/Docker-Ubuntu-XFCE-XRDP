@@ -41,7 +41,7 @@ RUN wget -O /tmp/wipter.deb https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRD
      rm /tmp/wipter.deb
 
 # Download Uprock and install
-COPY uprock_v0.0.8.deb /tmp/
+RUN wget -O /tmp/uprock_v0.0.8.deb https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRDP/releases/download/wipter/uprock_v0.0.8.deb
 RUN gdebi --n /tmp/uprock_v0.0.8.deb && \
     rm /tmp/uprock_v0.0.8.deb
 
