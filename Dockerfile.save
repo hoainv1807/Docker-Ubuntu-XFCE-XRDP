@@ -10,11 +10,8 @@ RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | 
 # Update, Upgrade and Install packages
 RUN apt-get update -y && apt-get upgrade -y
 
-RUN apt-get install --no-install-recommends xfce4-session \
-    xfwm4 xfce4-panel thunar zutty \
-    xinit xserver-xorg xserver-xorg-core -y
-
 RUN apt-get install -y \
+    xfce4 xfce4-goodies x xfce4-netload-plugin xfce4-cpufreq-plugin \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
     sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime \
     apt-transport-https openssh-server xdotool proxychains4
