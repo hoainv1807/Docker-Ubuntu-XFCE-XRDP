@@ -12,7 +12,7 @@ RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install --no-install-recommends xfce4-session \
     xfwm4 xfce4-panel thunar zutty \
-    xinit xserver-xorg xserver-xorg-core gnome-keyring -y
+    xinit xserver-xorg xserver-xorg-core gnome-keyring tini -y
 
 RUN apt-get install -y \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
@@ -72,6 +72,9 @@ EXPOSE 3389 22222
 # Copy entrypoint script to the image and make it executable
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# Use tini clear zombie process
+ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # Set the entrypoint script as the default command to run at container startup
 CMD ["/entrypoint.sh"]
