@@ -9,6 +9,7 @@ fi
 
 if id -u "$USERNAME" >/dev/null 2>&1; then
   echo "User $USERNAME already exists. Skipping user creation."
+  echo "$USERNAME:$PASSWORD" | chpasswd
 else
   echo "Creating user: $USERNAME"
   useradd -m -s /bin/bash "$USERNAME"
