@@ -11,8 +11,8 @@ RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | 
 RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install --no-install-recommends xfce4-session \
-    xfwm4 xfce4-panel thunar zutty \
-    xinit xserver-xorg xserver-xorg-core gnome-keyring tini -y
+    xfwm4 xfce4-panel thunar xterm \
+    xinit xserver-xorg xserver-xorg-core gnome-keyring seahorse tini -y
 
 RUN apt-get install -y \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
@@ -48,6 +48,7 @@ RUN gdebi --n /tmp/uprock_v0.0.8.deb && \
 # Grass
 COPY Grass.deb /tmp/
 RUN apt install /tmp/Grass.deb -y && apt update && apt install -f -y && rm /tmp/Grass.deb
+
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
     touch /root/.local/share/keyrings/default.keyring && \
@@ -59,6 +60,9 @@ RUN sed -i 's/#Port 22/Port 22222/' /etc/ssh/sshd_config && \
     echo "ListenAddress 0.0.0.0" >> /etc/ssh/sshd_config && \
     echo "ListenAddress ::" >> /etc/ssh/sshd_config && \
     mkdir -p /var/run/sshd
+
+# Set alias for zutty as default terminal emulator
+RUN update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/xterm 100
 
 # Clean up unnecessary packages and cache to reduce image size
 RUN apt-get autoclean && apt-get autoremove -y && apt-get autopurge -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
