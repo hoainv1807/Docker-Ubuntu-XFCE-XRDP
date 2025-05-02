@@ -1,4 +1,4 @@
-xdocker run -d --name Ubuntu-1 \
+docker run -d --name Ubuntu-1 \
   --shm-size 1g \
   --cpus 1 \
   --restart always \
