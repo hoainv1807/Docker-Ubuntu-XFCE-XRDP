@@ -17,7 +17,7 @@ RUN apt-get install --no-install-recommends xfce4-session \
 RUN apt-get install -y \
     xrdp xorg dbus dbus-x11 x11-xserver-utils \
     sudo htop wget curl nano gnupg gdebi iproute2 net-tools dialog util-linux uuid-runtime \
-    apt-transport-https openssh-server xdotool proxychains4 tesseract-ocr imagemagick
+    apt-transport-https openssh-server xautomation proxychains4 tesseract-ocr imagemagick
 
 RUN apt-get install -y \
     ca-certificates fonts-liberation xdg-utils \
