@@ -11,7 +11,7 @@ RUN echo 'keyboard-configuration keyboard-configuration/layoutcode select us' | 
 RUN apt-get update -y && apt-get upgrade -y
 
 RUN apt-get install --no-install-recommends xfce4-session \
-    xfwm4 xfce4-panel thunar xterm xvfb psmisc \
+    xfwm4 xfce4-panel thunar xterm \
     xinit xserver-xorg xserver-xorg-core gnome-keyring seahorse tini -y
 
 RUN apt-get install -y \
