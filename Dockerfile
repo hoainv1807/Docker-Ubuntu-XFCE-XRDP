@@ -41,13 +41,13 @@ RUN wget -O /tmp/wipter.deb https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRD
      rm /tmp/wipter.deb
 
 # Download Uprock and install
-RUN wget -O /tmp/uprock_v0.0.8.deb https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRDP/releases/download/wipter/uprock_v0.0.8.deb
-RUN gdebi --n /tmp/uprock_v0.0.8.deb && \
-    rm /tmp/uprock_v0.0.8.deb
+#RUN wget -O /tmp/uprock_v0.0.8.deb https://github.com/hoainv1807/Docker-Ubuntu-XFCE-XRDP/releases/download/wipter/uprock_v0.0.8.deb
+#RUN gdebi --n /tmp/uprock_v0.0.8.deb && \
+#    rm /tmp/uprock_v0.0.8.deb
 
 # Grass
-COPY Grass.deb /tmp/
-RUN apt install /tmp/Grass.deb -y && apt update && apt install -f -y && rm /tmp/Grass.deb
+#COPY Grass.deb /tmp/
+#RUN apt install /tmp/Grass.deb -y && apt update && apt install -f -y && rm /tmp/Grass.deb
 
 # Configure a passwordless default keyring to avoid authentication prompts
 RUN mkdir -p /root/.local/share/keyrings && \
