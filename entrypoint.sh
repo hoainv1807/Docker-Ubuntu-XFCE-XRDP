@@ -10,6 +10,7 @@ fi
 if id -u "$USERNAME" >/dev/null 2>&1; then
   echo "User $USERNAME already exists. Skipping user creation."
   echo "$USERNAME:$PASSWORD" | chpasswd
+  echo "xfce4-session" > /home/"$USERNAME"/.xsession
 else
   echo "Creating user: $USERNAME"
   useradd -m -s /bin/bash "$USERNAME"
@@ -27,6 +28,7 @@ else
   chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"/.local/share/keyrings
   echo "Passwordless keyring configured successfully for user: $USERNAME"
 fi
+echo "xfce4-session" > /root/.xsession
 
 echo "Forcefully killing any running XRDP services..."
 pkill -9 xrdp-sesman 2>/dev/null
@@ -39,6 +41,21 @@ fi
 
 echo "Starting SSH service..."
 service ssh restart
+
+#force xrdp on display 10
+DISPLAY_NUM=10
+RESOLUTION=680x820x8
+echo "[+] Starting Xvfb on :$DISPLAY_NUM with $RESOLUTION..."
+Xvfb :$DISPLAY_NUM -screen 0 $RESOLUTION &
+XVFB_PID=$!
+export DISPLAY=:$DISPLAY_NUM
+# Ensure xhost allows connections (optional, depending on your app)
+xhost +SI:localuser:root
+xhost +SI:localuser:$USERNAME
+# Patch /etc/xrdp/startwm.sh to force DISPLAY=:10
+sed -i "1i export DISPLAY=:$DISPLAY_NUM" /etc/xrdp/startwm.sh
+echo "[+] Setting DisplayLimit=1..."
+sed -i 's/^DisplayLimit=.*/DisplayLimit=1/' /etc/xrdp/sesman.ini || echo "DisplayLimit=1" >> /etc/xrdp/sesman.ini
 
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
