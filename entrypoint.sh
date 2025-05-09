@@ -41,21 +41,9 @@ fi
 
 echo "Starting SSH service..."
 service ssh restart
-
-#force xrdp on display 10
-DISPLAY_NUM=10
-RESOLUTION=680x820x8
-echo "[+] Starting Xvfb on :$DISPLAY_NUM with $RESOLUTION..."
-Xvfb :$DISPLAY_NUM -screen 0 $RESOLUTION &
-XVFB_PID=$!
-export DISPLAY=:$DISPLAY_NUM
-# Ensure xhost allows connections (optional, depending on your app)
-xhost +SI:localuser:root
-xhost +SI:localuser:$USERNAME
-# Patch /etc/xrdp/startwm.sh to force DISPLAY=:10
-sed -i "1i export DISPLAY=:$DISPLAY_NUM" /etc/xrdp/startwm.sh
-echo "[+] Setting DisplayLimit=1..."
-sed -i 's/^DisplayLimit=.*/DisplayLimit=1/' /etc/xrdp/sesman.ini || echo "DisplayLimit=1" >> /etc/xrdp/sesman.ini
+pkill Xorg
+fuser -k /tmp/.X11-unix/X10
+rm -rf /tmp/.X11-unix/X10
 
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
