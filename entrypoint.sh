@@ -41,9 +41,6 @@ fi
 
 echo "Starting SSH service..."
 service ssh restart
-pkill Xorg
-fuser -k /tmp/.X11-unix/X10
-rm -rf /tmp/.X11-unix/X10
 
 echo "Starting XRDP services..."
 /usr/sbin/xrdp-sesman &
